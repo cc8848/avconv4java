@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AVMainOptions.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">avconv4java</a> &gt; <a href="index.source.html" class="el_package">com.github.vbauer.avconv4java.option</a> &gt; <span class="el_source">AVMainOptions.java</span></div><h1>AVMainOptions.java</h1><pre class="source lang-java linenums">package com.github.vbauer.avconv4java.option;
+
+import com.github.vbauer.avconv4java.core.AVOptions;
+import com.github.vbauer.avconv4java.type.AVFileFormatType;
+import com.github.vbauer.avconv4java.type.AVStreamType;
+import com.github.vbauer.avconv4java.type.AVTargetFileType;
+
+import java.util.Collection;
+
+/**
+ * @see &lt;a href=&quot;http://libav.org/avconv.html#Main-options&quot;&gt;Official doc: &quot;5.6 Main options&quot;&lt;/a&gt;
+ *
+ * @author Vladislav Bauer
+ */
+
+<span class="fc" id="L16">public class AVMainOptions extends AVOptions {</span>
+
+    public static final String FLAG_FILE_FORMAT = &quot;-f&quot;;
+    public static final String FLAG_OVERWRITE_OUTPUT = &quot;-y&quot;;
+    public static final String FLAG_IMMEDIATELY_EXIT = &quot;-n&quot;;
+    public static final String FLAG_DURATION = &quot;-t&quot;;
+    public static final String FLAG_FILE_SIZE_LIMIT = &quot;-fs&quot;;
+    public static final String FLAG_SEEK = &quot;-ss&quot;;
+    public static final String FLAG_INPUT_TIME_OFFSET = &quot;-itsoffset&quot;;
+    public static final String FLAG_METADATA = &quot;-metadata&quot;;
+    public static final String FLAG_TARGET = &quot;-target&quot;;
+    public static final String FLAG_DATA_FRAMES = &quot;-dframes&quot;;
+    public static final String FLAG_FRAMES_COUNT = &quot;-frames&quot;;
+    public static final String FLAG_QUALITY_SCALE = &quot;-q&quot;;
+    public static final String FLAG_FILTER = &quot;-filter&quot;;
+    public static final String FLAG_FILTER_SCRIPT = &quot;-filter_script&quot;;
+    public static final String FLAG_PRESET = &quot;-pre&quot;;
+    public static final String FLAG_ATTACHMENT = &quot;-attach&quot;;
+    public static final String FLAG_DUMP_ATTACHMENT = &quot;-dump_attachment&quot;;
+
+    public static final String FORMAT_METADATA = &quot;%s=\&quot;%s\&quot;&quot;;
+
+
+    public static AVMainOptions create() {
+<span class="fc" id="L40">        return new AVMainOptions();</span>
+    }
+
+
+    @Override
+    public AVMainOptions flags(final Collection&lt;Object&gt; flags) {
+<span class="fc" id="L46">        return (AVMainOptions) super.flags(flags);</span>
+    }
+
+    @Override
+    public AVMainOptions flags(final Object... flags) {
+<span class="fc" id="L51">        return (AVMainOptions) super.flags(flags);</span>
+    }
+
+    @Override
+    public AVMainOptions builders(final Collection&lt;AVOptions&gt; builders) {
+<span class="fc" id="L56">        return (AVMainOptions) super.builders(builders);</span>
+    }
+
+    @Override
+    public AVMainOptions builders(final AVOptions... builders) {
+<span class="fc" id="L61">        return (AVMainOptions) super.builders(builders);</span>
+    }
+
+
+    /**
+     * ‘-f fmt (input/output)’
+     * Force input or output file format. The format is normally autodetected for input files and guessed from file
+     * extension for output files, so this option is not needed in most cases.
+     */
+    public AVMainOptions fileFormat(final AVFileFormatType formatType) {
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">        return fileFormat(formatType == null ? null : formatType.getName());</span>
+    }
+
+    public AVMainOptions fileFormat(final String formatTypeName) {
+<span class="fc" id="L75">        return flags(FLAG_FILE_FORMAT, formatTypeName);</span>
+    }
+
+    /**
+     * ‘-y (global)’
+     * Overwrite output files without asking.
+     */
+    public AVMainOptions overwriteOutput() {
+<span class="fc" id="L83">        return flags(FLAG_OVERWRITE_OUTPUT);</span>
+    }
+
+    /**
+     * ‘-n (global)’
+     * Immediately exit when output files already exist.
+     */
+    public AVMainOptions immediatelyExit() {
+<span class="fc" id="L91">        return flags(FLAG_IMMEDIATELY_EXIT);</span>
+    }
+
+    /**
+     * ‘-t duration (output)’
+     * Stop writing the output after its duration reaches duration. duration may be a number in seconds,
+     * or in hh:mm:ss[.xxx] form.
+     */
+    public AVMainOptions duration(final String duration) {
+<span class="fc" id="L100">        return flags(FLAG_DURATION, duration);</span>
+    }
+
+    public AVMainOptions duration(final Long duration) {
+<span class="fc" id="L104">        return flags(FLAG_DURATION, duration);</span>
+    }
+
+    /**
+     * ‘-fs limit_size (output)’
+     * Set the file size limit.
+     */
+    public AVMainOptions fileSizeLimit(final Long fileSize) {
+<span class="fc" id="L112">        return flags(FLAG_FILE_SIZE_LIMIT, fileSize);</span>
+    }
+
+    /**
+     * ‘-ss position (input/output)’
+     * When used as an input option (before -i), seeks in this input file to position.
+     * Note the in most formats it is not possible to position exactly, so avconv will position to the closest position
+     * point before position. When transcoding and ‘-accurate_seek’ is enabled (the default), this extra segment
+     * between the position point and position will be decoded and discarded. When doing stream copy or when
+     * ‘-noaccurate_seek’ is used, it will be preserved.
+     *
+     * When used as an output option (before an output filename), decodes but discards input until the timestamps
+     * reach position.
+     *
+     * position may be either in seconds or in hh:mm:ss[.xxx] form.
+     */
+    public AVMainOptions seek(final String position) {
+<span class="fc" id="L129">        return flags(FLAG_SEEK, position);</span>
+    }
+
+    public AVMainOptions seek(final Double position) {
+<span class="fc" id="L133">        return seek(sec(position));</span>
+    }
+
+    /**
+     * ‘-itsoffset offset (input)’
+     * Set the input time offset in seconds. [-]hh:mm:ss[.xxx] syntax is also supported. The offset is added to the
+     * timestamps of the input files. Specifying a positive offset means that the corresponding streams are delayed by
+     * offset seconds.
+     */
+    public AVMainOptions inputTimeOffset(final String position) {
+<span class="fc" id="L143">        return flags(FLAG_INPUT_TIME_OFFSET, position);</span>
+    }
+
+    public AVMainOptions inputTimeOffset(final Double position) {
+<span class="fc" id="L147">        return inputTimeOffset(sec(position));</span>
+    }
+
+    /**
+     * ‘-metadata[:metadata_specifier] key=value (output,per-metadata)’
+     * Set a metadata key/value pair.
+     *
+     * An optional metadata_specifier may be given to set metadata on streams or chapters. See -map_metadata
+     * documentation for details. This option overrides metadata set with -map_metadata. It is also possible to delete
+     * metadata by using an empty value.
+     *
+     * For example, for setting the title in the output file:
+     * avconv -i in.avi -metadata title=&quot;my title&quot; out.flv
+     *
+     * To set the language of the first audio stream:
+     * avconv -i INPUT -metadata:s:a:0 language=eng OUTPUT
+     */
+    public AVMainOptions metadata(final String key, final Object value) {
+<span class="fc" id="L165">        return flags(FLAG_METADATA, format(FORMAT_METADATA, key, value));</span>
+    }
+
+    /**
+     * ‘-dframes number (output)’
+     * Set the number of data frames to record. This is an alias for -frames:d.
+     */
+    public AVMainOptions dataFrames(final Long dataFrames) {
+<span class="fc" id="L173">        return flags(FLAG_DATA_FRAMES, dataFrames);</span>
+    }
+
+    /**
+     * ‘-target type (output)’
+     * Specify target file type (vcd, svcd, dvd, dv, dv50). type may be prefixed with pal-, ntsc- or film- to use the
+     * corresponding standard. All the format options (bitrate, codecs, buffer sizes) are then set automatically.
+     *
+     * You can just type:
+     *      avconv -i myfile.avi -target vcd /tmp/vcd.mpg
+     *
+     * Nevertheless you can specify additional options as long as you know they do not conflict with the standard,
+     * as in:
+     *      avconv -i myfile.avi -target vcd -bf 2 /tmp/vcd.mpg
+     */
+    public AVMainOptions target(final AVTargetFileType targetFileType) {
+<span class="pc bpc" id="L189" title="1 of 2 branches missed.">        final String targetFileTypeName = targetFileType == null ? null : targetFileType.getName();</span>
+<span class="fc" id="L190">        return target(targetFileTypeName);</span>
+    }
+
+    public AVMainOptions target(final String targetFileTypeName) {
+<span class="fc" id="L194">        return flags(FLAG_TARGET, targetFileTypeName);</span>
+    }
+
+    /**
+     * ‘-frames[:stream_specifier] framecount (output,per-stream)’
+     * Stop writing to the stream after framecount frames.
+     */
+    public AVMainOptions framesCount(final AVStreamType streamType, final Long count) {
+<span class="fc" id="L202">        return flags(specifyStream(FLAG_FRAMES_COUNT, streamType), count);</span>
+    }
+
+    public AVMainOptions framesCount(final Long count) {
+<span class="fc" id="L206">        return flags(null, count);</span>
+    }
+
+    /**
+     * ‘-q[:stream_specifier] q (output,per-stream)’
+     * ‘-qscale[:stream_specifier] q (output,per-stream)’
+     * Use fixed quality scale (VBR). The meaning of q is codec-dependent.
+     */
+    public AVMainOptions qualityScale(final AVStreamType streamType, final Double quality) {
+<span class="fc" id="L215">        return flags(specifyStream(FLAG_QUALITY_SCALE, streamType), format(&quot;%.4f&quot;, quality));</span>
+    }
+
+    public AVMainOptions qualityScale(final Double quality) {
+<span class="fc" id="L219">        return qualityScale(null, quality);</span>
+    }
+
+    /**
+     * ‘-filter[:stream_specifier] filter_graph (output,per-stream)’
+     * filter_graph is a description of the filter graph to apply to the stream. Use -filters to show all the
+     * available filters (including also sources and sinks).
+     *
+     * See also the ‘-filter_complex’ option if you want to create filter graphs with multiple inputs and/or outputs.
+     */
+    public AVMainOptions filter(final AVStreamType streamType, final String filter, final Object... params) {
+<span class="fc" id="L230">        return flags(specifyStream(FLAG_FILTER, streamType), format(filter, params));</span>
+    }
+
+    public AVMainOptions filter(final String filter, final Object... params) {
+<span class="fc" id="L234">        return filter(null, filter, params);</span>
+    }
+
+    /**
+     * ‘-filter_script[:stream_specifier] filename (output,per-stream)’
+     * This option is similar to ‘-filter’, the only difference is that its argument is the name of the file from
+     * which a filtergraph description is to be read.
+     */
+    public AVMainOptions filterScript(final AVStreamType streamType, final String fileName) {
+<span class="fc" id="L243">        return flags(specifyStream(FLAG_FILTER_SCRIPT, streamType), fileName);</span>
+    }
+
+    public AVMainOptions filterScript(final String fileName) {
+<span class="fc" id="L247">        return filterScript(null, fileName);</span>
+    }
+
+    /**
+     * ‘-pre[:stream_specifier] preset_name (output,per-stream)’
+     * Specify the preset for matching stream(s).
+     */
+    public AVMainOptions preset(final AVStreamType streamType, final String preset) {
+<span class="fc" id="L255">        return flags(specifyStream(FLAG_PRESET, streamType), preset);</span>
+    }
+
+    public AVMainOptions preset(final String preset) {
+<span class="fc" id="L259">        return preset(null, preset);</span>
+    }
+
+    /**
+     * ‘-attach filename (output)’
+     * Add an attachment to the output file. This is supported by a few formats like Matroska for e.g. fonts used
+     * in rendering subtitles. Attachments are implemented as a specific type of stream, so this option will add
+     * a new stream to the file. It is then possible to use per-stream options on this stream in the usual way.
+     * Attachment streams created with this option will be created after all the other streams
+     * (i.e. those created with -map or automatic mappings).
+     *
+     * Note that for Matroska you also have to set the mimetype metadata tag:
+     * avconv -i INPUT -attach DejaVuSans.ttf -metadata:s:2 mimetype=application/x-truetype-font out.mkv
+     * (assuming that the attachment stream will be third in the output file).
+     */
+    public AVMainOptions attachment(final String fileName) {
+<span class="fc" id="L275">        return flags(FLAG_ATTACHMENT, fileName);</span>
+    }
+
+    /**
+     * ‘-dump_attachment[:stream_specifier] filename (input,per-stream)’
+     * Extract the matching attachment stream into a file named filename. If filename is empty, then the value of
+     * the filename metadata tag will be used.
+     *
+     * E.g. to extract the first attachment to a file named ’out.ttf’:
+     * avconv -dump_attachment:t:0 out.ttf INPUT
+     *
+     * To extract all attachments to files determined by the filename tag:
+     * avconv -dump_attachment:t &quot;&quot; INPUT
+     *
+     * Technical note – attachments are implemented as codec extradata, so this option can actually be used to
+     * extract extradata from any stream, not just attachments.
+     */
+    public AVMainOptions dumpAttachment(final AVStreamType streamType, final String fileName) {
+<span class="fc" id="L293">        return flags(specifyStream(FLAG_DUMP_ATTACHMENT, streamType), fileName);</span>
+    }
+
+    public AVMainOptions dumpAttachment(final String fileName) {
+<span class="fc" id="L297">        return dumpAttachment(null, fileName);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>

@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AVCodecOptions.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">avconv4java</a> &gt; <a href="index.source.html" class="el_package">com.github.vbauer.avconv4java.option</a> &gt; <span class="el_source">AVCodecOptions.java</span></div><h1>AVCodecOptions.java</h1><pre class="source lang-java linenums">package com.github.vbauer.avconv4java.option;
+
+import com.github.vbauer.avconv4java.core.AVOptions;
+import com.github.vbauer.avconv4java.type.AVCodecFlagType;
+import com.github.vbauer.avconv4java.type.AVDebugInfoType;
+import com.github.vbauer.avconv4java.type.AVMotionEstimationType;
+import com.github.vbauer.avconv4java.type.AVStreamType;
+import com.github.vbauer.avconv4java.type.AVStrictType;
+
+import java.util.Collection;
+
+/**
+ * @see &lt;a href=&quot;http://libav.org/avconv.html#Codec-AVOptions&quot;&gt;Official doc: &quot;5.4 Codec AVOptions&quot;&lt;/a&gt;
+ *
+ * @author Vladislav Bauer
+ */
+
+<span class="fc" id="L18">public class AVCodecOptions extends AVOptions {</span>
+
+    public static final String FLAG_BIT_RATE = &quot;-b&quot;;
+    public static final String FLAG_VIDEO_BIT_RATE_TOLERANCE = &quot;-bt&quot;;
+    public static final String FLAG_CODEC_FLAGS = &quot;-flags&quot;;
+    public static final String FLAG_MOTION_ESTIMATION_METHOD = &quot;-me_method&quot;;
+    public static final String FLAG_GROUP_OF_PICTURES = &quot;-g&quot;;
+    public static final String FLAG_CUT_OFF_BANDWIDTH = &quot;-cutoff&quot;;
+    public static final String FLAG_FRAME_SIZE = &quot;-frame_size&quot;;
+    public static final String FLAG_STRICT = &quot;-strict&quot;;
+    public static final String FLAG_DEBUG = &quot;-debug&quot;;
+    public static final String FLAG_PRESET = &quot;-pre&quot;;
+
+
+    public static AVCodecOptions create() {
+<span class="fc" id="L33">        return new AVCodecOptions();</span>
+    }
+
+
+    @Override
+    public AVCodecOptions flags(final Collection&lt;Object&gt; flags) {
+<span class="fc" id="L39">        return (AVCodecOptions) super.flags(flags);</span>
+    }
+
+    @Override
+    public AVCodecOptions flags(final Object... flags) {
+<span class="fc" id="L44">        return (AVCodecOptions) super.flags(flags);</span>
+    }
+
+    @Override
+    public AVCodecOptions builders(final Collection&lt;AVOptions&gt; builders) {
+<span class="fc" id="L49">        return (AVCodecOptions) super.builders(builders);</span>
+    }
+
+    @Override
+    public AVCodecOptions builders(final AVOptions... builders) {
+<span class="fc" id="L54">        return (AVCodecOptions) super.builders(builders);</span>
+    }
+
+
+    public AVCodecOptions strict(final AVStrictType strictType) {
+<span class="pc bpc" id="L59" title="1 of 2 branches missed.">        return strict(strictType == null ? null : strictType.getName());</span>
+    }
+
+    public AVCodecOptions strict(final String strictTypeName) {
+<span class="fc" id="L63">        return flags(FLAG_STRICT, strictTypeName);</span>
+    }
+
+    /**
+     * ‘-b[:stream_specifier] integer (output,audio,video)’
+     * Set bitrate (in kbits/s).
+     */
+    public AVCodecOptions bitRate(final AVStreamType streamType, final Integer bitRate) {
+<span class="fc" id="L71">        return flags(specifyStream(FLAG_BIT_RATE, streamType), kb(bitRate));</span>
+    }
+
+    public AVCodecOptions bitRate(final Integer bitRate) {
+<span class="fc" id="L75">        return bitRate(null, bitRate);</span>
+    }
+
+    /**
+     * ‘-bt[:stream_specifier] integer (output,video)’
+     * Set video bitrate tolerance (in kbits/s). In 1-pass mode, bitrate tolerance specifies how far ratecontrol is
+     * willing to deviate from the target average bitrate value. This is not related to minimum/maximum bitrate.
+     * Lowering tolerance too much has an adverse effect on quality.
+     */
+    public AVCodecOptions videoBitRateTolerance(final AVStreamType streamType, final Integer bitRate) {
+<span class="fc" id="L85">        return flags(specifyStream(FLAG_VIDEO_BIT_RATE_TOLERANCE, streamType), kb(bitRate));</span>
+    }
+
+    public AVCodecOptions videoBitRateTolerance(final Integer bitRate) {
+<span class="fc" id="L89">        return videoBitRateTolerance(null, bitRate);</span>
+    }
+
+    /**
+     * ‘-me_method[:stream_specifier] integer (output,video)’
+     * Set motion estimation method.
+     */
+    public AVCodecOptions motionEstimationMethod(
+        final AVStreamType streamType, final AVMotionEstimationType motionEstimationType
+    ) {
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">        final String motionEstimationTypeName = motionEstimationType == null ? null : motionEstimationType.getName();</span>
+<span class="fc" id="L100">        return motionEstimationMethod(streamType, motionEstimationTypeName);</span>
+    }
+
+    public AVCodecOptions motionEstimationMethod(final AVMotionEstimationType motionEstimationType) {
+<span class="fc" id="L104">        return motionEstimationMethod(null, motionEstimationType);</span>
+    }
+
+    public AVCodecOptions motionEstimationMethod(final AVStreamType streamType, final String motionEstimationType) {
+<span class="fc" id="L108">        return flags(specifyStream(FLAG_MOTION_ESTIMATION_METHOD, streamType), motionEstimationType);</span>
+    }
+
+    public AVCodecOptions motionEstimationMethod(final String motionEstimationType) {
+<span class="fc" id="L112">        return motionEstimationMethod(null, motionEstimationType);</span>
+    }
+
+    /**
+     * ‘-debug[:stream_specifier] flags (input/output,audio,video,subtitles)’
+     * Print specific debug info.
+     */
+    public AVCodecOptions debug(final AVDebugInfoType debugInfoType) {
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">        return debug(debugInfoType == null ? null : debugInfoType.getName());</span>
+    }
+
+    public AVCodecOptions debug(final String debugInfoTypeName) {
+<span class="fc" id="L124">        return flags(FLAG_DEBUG, debugInfoTypeName);</span>
+    }
+
+    /**
+     * ‘-flags[:stream_specifier] flags (input/output,audio,video)’
+     */
+    public AVCodecOptions codecFlags(final AVStreamType streamType, final AVCodecFlagType flagType) {
+<span class="pc bpc" id="L131" title="1 of 2 branches missed.">        return codecFlags(streamType, flagType == null ? null : flagType.getName());</span>
+    }
+
+    public AVCodecOptions codecFlags(final AVCodecFlagType flagType) {
+<span class="fc" id="L135">        return codecFlags(null, flagType);</span>
+    }
+
+    public AVCodecOptions codecFlags(final AVStreamType streamType, final String flagTypeName) {
+<span class="fc" id="L139">        return flags(specifyStream(FLAG_CODEC_FLAGS, streamType), flagTypeName);</span>
+    }
+
+    public AVCodecOptions codecFlags(final String flagTypeName) {
+<span class="fc" id="L143">        return codecFlags(null, flagTypeName);</span>
+    }
+
+    /**
+     * ‘-g[:stream_specifier] integer (output,video)’
+     * set the group of picture (GOP) size
+     */
+    public AVCodecOptions groupOfPictures(final AVStreamType streamType, final Integer gopSize) {
+<span class="fc" id="L151">        return flags(specifyStream(FLAG_GROUP_OF_PICTURES, streamType), gopSize);</span>
+    }
+
+    public AVCodecOptions groupOfPictures(final Integer gopSize) {
+<span class="fc" id="L155">        return groupOfPictures(null, gopSize);</span>
+    }
+
+    /**
+     * ‘-cutoff[:stream_specifier] integer (output,audio)’
+     * set cutoff bandwidth
+     */
+    public AVCodecOptions cutOffBandwidth(final AVStreamType streamType, final Integer bandwidth) {
+<span class="fc" id="L163">        return flags(specifyStream(FLAG_CUT_OFF_BANDWIDTH, streamType), bandwidth);</span>
+    }
+
+    public AVCodecOptions cutOffBandwidth(final Integer bandwidth) {
+<span class="fc" id="L167">        return cutOffBandwidth(null, bandwidth);</span>
+    }
+
+    public AVCodecOptions frameSize(final AVStreamType streamType, final Integer size) {
+<span class="fc" id="L171">        return flags(specifyStream(FLAG_FRAME_SIZE, streamType), size);</span>
+    }
+
+    public AVCodecOptions frameSize(final Integer size) {
+<span class="fc" id="L175">        return frameSize(null, size);</span>
+    }
+
+    public AVCodecOptions preset(final AVStreamType streamType, final String fileName) {
+<span class="fc" id="L179">        return flags(specifyStream(FLAG_PRESET, streamType), fileName);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>

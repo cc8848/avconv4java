@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AVMovFlagsType.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">avconv4java</a> &gt; <a href="index.source.html" class="el_package">com.github.vbauer.avconv4java.type</a> &gt; <span class="el_source">AVMovFlagsType.java</span></div><h1>AVMovFlagsType.java</h1><pre class="source lang-java linenums">package com.github.vbauer.avconv4java.type;
+
+import com.github.vbauer.avconv4java.util.AVUtils;
+
+/**
+ * @author Vladislav Bauer
+ */
+
+<span class="pc" id="L9">public enum AVMovFlagsType implements NamedType {</span>
+
+    /**
+     * Start a new fragment at each video keyframe.
+     */
+<span class="fc" id="L14">    FRAG_KEY_FRAME(Constants.FRAG_KEY_FRAME),</span>
+
+    /**
+     * Allow the caller to manually choose when to cut fragments, by calling av_write_frame(ctx, NULL)
+     * to write a fragment with the packets written so far. (This is only useful with other applications
+     * integrating libavformat, not from avconv.)
+     */
+<span class="fc" id="L21">    FRAG_CUSTOM(Constants.FRAG_CUSTOM),</span>
+
+    /**
+     * Write an initial moov atom directly at the start of the file, without describing any samples in it.
+     * Generally, an mdat/moov pair is written at the start of the file, as a normal MOV/MP4 file, containing only
+     * a short portion of the file. With this option set, there is no initial mdat atom, and the moov atom only
+     * describes the tracks but has a zero duration.
+     *
+     * Files written with this option set do not work in QuickTime.
+     * This option is implicitly set when writing ismv (Smooth Streaming) files.
+     */
+<span class="fc" id="L32">    EMPTY_MOOV(Constants.EMPTY_MOOV),</span>
+
+    /**
+     * Write a separate moof (movie fragment) atom for each track. Normally, packets for all tracks are written
+     * in a moof atom (which is slightly more efficient), but with this option set, the muxer writes one moof/mdat
+     * pair for each track, making it easier to separate tracks.
+     *
+     * This option is implicitly set when writing ismv (Smooth Streaming) files.
+     */
+<span class="fc" id="L41">    SEPARATE_MOOF(Constants.SEPARATE_MOOF),</span>
+
+    /**
+     * Run a second pass moving the index (moov atom) to the beginning of the file.
+     * This operation can take a while, and will not work in various situations such as fragmented output,
+     * thus it is not enabled by default.
+     */
+<span class="fc" id="L48">    FAST_START(Constants.FAST_START);</span>
+
+
+    private final String name;
+
+
+<span class="fc" id="L54">    AVMovFlagsType(final String name) {</span>
+<span class="fc" id="L55">        this.name = name;</span>
+<span class="fc" id="L56">    }</span>
+
+
+    @Override
+    public String getName() {
+<span class="fc" id="L61">        return name;</span>
+    }
+
+
+    public static AVMovFlagsType findByName(final String name) {
+<span class="fc" id="L66">        return AVUtils.findByName(AVMovFlagsType.class, name);</span>
+    }
+
+
+    /**
+     * @author Vladislav Bauer
+     */
+
+    public static final class Constants {
+
+        public static final String FRAG_KEY_FRAME = &quot;frag_keyframe&quot;;
+        public static final String FRAG_CUSTOM = &quot;frag_custom&quot;;
+        public static final String EMPTY_MOOV = &quot;empty_moov&quot;;
+        public static final String SEPARATE_MOOF = &quot;separate_moof&quot;;
+        public static final String FAST_START = &quot;faststart&quot;;
+
+
+<span class="fc" id="L83">        private Constants() {</span>
+<span class="fc" id="L84">            throw new UnsupportedOperationException();</span>
+        }
+
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>

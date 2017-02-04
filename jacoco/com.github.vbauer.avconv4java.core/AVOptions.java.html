@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AVOptions.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">avconv4java</a> &gt; <a href="index.source.html" class="el_package">com.github.vbauer.avconv4java.core</a> &gt; <span class="el_source">AVOptions.java</span></div><h1>AVOptions.java</h1><pre class="source lang-java linenums">package com.github.vbauer.avconv4java.core;
+
+import com.github.vbauer.avconv4java.type.AVStreamType;
+import com.github.vbauer.avconv4java.util.AVUtils;
+
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
+
+/**
+ * Basic class for options.
+ *
+ * @author Vladislav Bauer
+ */
+
+<span class="fc" id="L16">public class AVOptions {</span>
+
+<span class="fc" id="L18">    private final List&lt;AVOptions&gt; builders = new LinkedList&lt;&gt;();</span>
+<span class="fc" id="L19">    private final List&lt;String&gt; arguments = new LinkedList&lt;&gt;();</span>
+
+
+    public static AVOptions create() {
+<span class="fc" id="L23">        return new AVOptions();</span>
+    }
+
+
+    @Override
+    public String toString() {
+<span class="fc" id="L29">        return AVUtils.join(build());</span>
+    }
+
+
+    public AVOptions flags(final Collection&lt;Object&gt; flags) {
+<span class="pc bpc" id="L34" title="1 of 2 branches missed.">        return AVUtils.isEmpty(flags) ? this : flags(flags.toArray(new Object[flags.size()]));</span>
+    }
+
+    public AVOptions flags(final Object... flags) {
+<span class="fc bfc" id="L38" title="All 2 branches covered.">        if (!AVUtils.isEmpty(flags)) {</span>
+<span class="fc" id="L39">            final List&lt;String&gt; newFlags = new LinkedList&lt;&gt;();</span>
+<span class="fc bfc" id="L40" title="All 2 branches covered.">            for (final Object flag : flags) {</span>
+<span class="fc bfc" id="L41" title="All 2 branches covered.">                if (flag == null) {</span>
+<span class="fc" id="L42">                    return this;</span>
+                }
+<span class="fc" id="L44">                newFlags.add(String.valueOf(flag));</span>
+            }
+<span class="fc" id="L46">            arguments.addAll(newFlags);</span>
+        }
+<span class="fc" id="L48">        return this;</span>
+    }
+
+    public AVOptions builders(final Collection&lt;AVOptions&gt; builders) {
+<span class="pc bpc" id="L52" title="1 of 2 branches missed.">        return AVUtils.isEmpty(builders) ? this : builders(builders.toArray(new AVOptions[builders.size()]));</span>
+    }
+
+    public AVOptions builders(final AVOptions... builders) {
+<span class="fc bfc" id="L56" title="All 2 branches covered.">        if (!AVUtils.isEmpty((Object[]) builders)) {</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">            for (final AVOptions builder : builders) {</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">                if (builder instanceof AVRootOptions) {</span>
+<span class="fc" id="L59">                    throw new IllegalArgumentException(&quot;It's impossible to add root options as child node&quot;);</span>
+                }
+<span class="fc" id="L61">                this.builders.add(builder);</span>
+            }
+        }
+<span class="fc" id="L64">        return this;</span>
+    }
+
+    public List&lt;String&gt; build() {
+<span class="fc" id="L68">        final List&lt;String&gt; result = new LinkedList&lt;&gt;();</span>
+<span class="fc" id="L69">        result.addAll(arguments);</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">        for (final AVOptions builder : builders) {</span>
+<span class="fc" id="L71">            result.addAll(builder.build());</span>
+<span class="fc" id="L72">        }</span>
+<span class="fc" id="L73">        return result;</span>
+    }
+
+
+    protected final String kb(final Number value) {
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">        return value == null ? null : value + &quot;k&quot;;</span>
+    }
+
+    protected final String sec(final Double position) {
+<span class="fc" id="L82">        return format(&quot;%.2f&quot;, position);</span>
+    }
+
+    protected final Integer even(final Integer value) {
+<span class="pc bpc" id="L86" title="1 of 2 branches missed.">        return value == null ? null : value - value % 2;</span>
+    }
+
+    protected final String format(final String filter, final Object... params) {
+<span class="pc bpc" id="L90" title="1 of 4 branches missed.">        return filter == null || AVUtils.hasNull(params) ? null : String.format(filter, params);</span>
+    }
+
+    protected final String specifyStream(final String flag, final AVStreamType streamType) {
+<span class="pc bpc" id="L94" title="1 of 4 branches missed.">        return flag != null ? streamType != null ? flag + &quot;:&quot; + streamType.getName() : flag : null;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AVGenericOptions.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">avconv4java</a> &gt; <a href="index.source.html" class="el_package">com.github.vbauer.avconv4java.option</a> &gt; <span class="el_source">AVGenericOptions.java</span></div><h1>AVGenericOptions.java</h1><pre class="source lang-java linenums">package com.github.vbauer.avconv4java.option;
+
+import com.github.vbauer.avconv4java.core.AVOptions;
+import com.github.vbauer.avconv4java.type.AVLogLevelType;
+
+import java.util.Collection;
+
+/**
+ * @see &lt;a href=&quot;http://libav.org/avconv.html#Generic-options&quot;&gt;Official doc: &quot;5.2 Generic options&quot;&lt;/a&gt;
+ *
+ * @author Vladislav Bauer
+ */
+
+<span class="fc" id="L14">public class AVGenericOptions extends AVOptions {</span>
+
+    public static final String FLAG_LOG_LEVEL = &quot;-loglevel&quot;;
+    public static final String FLAG_CPU_FLAGS = &quot;-cpuflags&quot;;
+    public static final String FLAG_SHOW_LICENSE = &quot;-L&quot;;
+
+
+    public static AVGenericOptions create() {
+<span class="fc" id="L22">        return new AVGenericOptions();</span>
+    }
+
+
+    @Override
+    public AVGenericOptions flags(final Collection&lt;Object&gt; flags) {
+<span class="fc" id="L28">        return (AVGenericOptions) super.flags(flags);</span>
+    }
+
+    @Override
+    public AVGenericOptions flags(final Object... flags) {
+<span class="fc" id="L33">        return (AVGenericOptions) super.flags(flags);</span>
+    }
+
+    @Override
+    public AVGenericOptions builders(final Collection&lt;AVOptions&gt; builders) {
+<span class="fc" id="L38">        return (AVGenericOptions) super.builders(builders);</span>
+    }
+
+    @Override
+    public AVGenericOptions builders(final AVOptions... builders) {
+<span class="fc" id="L43">        return (AVGenericOptions) super.builders(builders);</span>
+    }
+
+
+    public AVGenericOptions logLevel(final Integer level) {
+<span class="pc bpc" id="L48" title="1 of 2 branches missed.">        return logLevel(level == null ? null : String.valueOf(level));</span>
+    }
+
+    public AVGenericOptions logLevel(final AVLogLevelType logLevelType) {
+<span class="pc bpc" id="L52" title="1 of 2 branches missed.">        return logLevel(logLevelType == null ? null : logLevelType.getName());</span>
+    }
+
+    public AVGenericOptions logLevel(final String logLevelName) {
+<span class="fc" id="L56">        return flags(FLAG_LOG_LEVEL, logLevelName);</span>
+    }
+
+    public AVGenericOptions cpuFlags(final String mask) {
+<span class="fc" id="L60">        return flags(FLAG_CPU_FLAGS, mask);</span>
+    }
+
+    public AVGenericOptions showLicense() {
+<span class="fc" id="L64">        return flags(FLAG_SHOW_LICENSE);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>

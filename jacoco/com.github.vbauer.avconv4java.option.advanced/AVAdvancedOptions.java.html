@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AVAdvancedOptions.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">avconv4java</a> &gt; <a href="index.source.html" class="el_package">com.github.vbauer.avconv4java.option.advanced</a> &gt; <span class="el_source">AVAdvancedOptions.java</span></div><h1>AVAdvancedOptions.java</h1><pre class="source lang-java linenums">package com.github.vbauer.avconv4java.option.advanced;
+
+import com.github.vbauer.avconv4java.core.AVOptions;
+import com.github.vbauer.avconv4java.type.AVVideoSyncType;
+
+/**
+ * @see &lt;a href=&quot;http://libav.org/avconv.html#Advanced-options&quot;&gt;Official doc: &quot;5.12 Advanced options&quot;&lt;/a&gt;
+ *
+ * @author Vladislav Bauer
+ */
+
+<span class="fc" id="L12">public class AVAdvancedOptions extends AVOptions {</span>
+
+    public static final String FLAG_BENCHMARK = &quot;-benchmark&quot;;
+    public static final String FLAG_TIME_LIMIT = &quot;-timelimit&quot;;
+    public static final String FLAG_DUMP = &quot;-dump&quot;;
+    public static final String FLAG_HEX = &quot;-hex&quot;;
+    public static final String FLAG_VIDEO_SYNC_METHOD = &quot;-vsync&quot;;
+    public static final String FLAG_COPY_TIMESTAMPS = &quot;-copyts&quot;;
+    public static final String FLAG_COPY_TIME_BASE = &quot;-copytb&quot;;
+    public static final String FLAG_DISCONTINUITY_DELTA_THRESHOLD = &quot;-dts_delta_threshold&quot;;
+    public static final String FLAG_FILTER_COMPLEX_SCRIPT = &quot;-filter_complex_script&quot;;
+    public static final String FLAG_SHORTEST = &quot;-shortest&quot;;
+    public static final String FLAG_MAX_DEMUX_DELAY = &quot;-muxdelay&quot;;
+    public static final String FLAG_DEMUX_PRELOAD_DELAY = &quot;-muxpreload&quot;;
+    public static final String FLAG_ACCURATE_SEEK = &quot;-accurate_seek&quot;;
+    public static final String FLAG_NO_ACCURATE_SEEK = &quot;-noaccurate_seek&quot;;
+
+
+    public static AVAdvancedOptions create() {
+<span class="fc" id="L31">        return new AVAdvancedOptions();</span>
+    }
+
+
+    @Override
+    public AVAdvancedOptions flags(final Object... flags) {
+<span class="fc" id="L37">        return (AVAdvancedOptions) super.flags(flags);</span>
+    }
+
+    @Override
+    public AVAdvancedOptions builders(final AVOptions... builders) {
+<span class="fc" id="L42">        return (AVAdvancedOptions) super.builders(builders);</span>
+    }
+
+
+    /**
+     * ‘-benchmark (global)’
+     * Show benchmarking information at the end of an encode. Shows CPU time used and maximum memory consumption.
+     * Maximum memory consumption is not supported on all systems, it will usually display as 0 if not supported.
+     */
+    public AVAdvancedOptions benchmark() {
+<span class="fc" id="L52">        return flags(FLAG_BENCHMARK);</span>
+    }
+
+    /**
+     * ‘-timelimit duration (global)’
+     * Exit after avconv has been running for duration seconds.
+     */
+    public AVAdvancedOptions timeLimit(final Long limit) {
+<span class="fc" id="L60">        return flags(FLAG_TIME_LIMIT, limit);</span>
+    }
+
+    /**
+     * ‘-dump (global)’
+     * Dump each input packet to stderr.
+     */
+    public AVAdvancedOptions dump() {
+<span class="fc" id="L68">        return flags(FLAG_DUMP);</span>
+    }
+
+    /**
+     * ‘-hex (global)’
+     * When dumping packets, also dump the payload.
+     */
+    public AVAdvancedOptions hex() {
+<span class="fc" id="L76">        return flags(FLAG_HEX);</span>
+    }
+
+    /**
+     * ‘-vsync parameter’
+     * Video sync method.
+     */
+    public AVAdvancedOptions videoSyncMethod(final AVVideoSyncType videoSyncType) {
+<span class="pc bpc" id="L84" title="1 of 2 branches missed.">        return videoSyncMethod(videoSyncType == null ? null : videoSyncType.getName());</span>
+    }
+
+    public AVAdvancedOptions videoSyncMethod(final String videoSyncTypeName) {
+<span class="fc" id="L88">        return flags(FLAG_VIDEO_SYNC_METHOD, videoSyncTypeName);</span>
+    }
+
+    /**
+     * ‘-copyts’
+     * Copy timestamps from input to output.
+     */
+    public AVAdvancedOptions copyTimestamps() {
+<span class="fc" id="L96">        return flags(FLAG_COPY_TIMESTAMPS);</span>
+    }
+
+    /**
+     * ‘-copytb’
+     * Copy input stream time base from input to output when stream copying.
+     */
+    public AVAdvancedOptions copyTimeBase() {
+<span class="fc" id="L104">        return flags(FLAG_COPY_TIME_BASE);</span>
+    }
+
+    /**
+     * ‘-dts_delta_threshold’
+     * Timestamp discontinuity delta threshold.
+     */
+    public AVAdvancedOptions discontinuityDeltaThreshold() {
+<span class="fc" id="L112">        return flags(FLAG_DISCONTINUITY_DELTA_THRESHOLD);</span>
+    }
+
+    /**
+     * ‘-filter_complex_script filename (global)’
+     * This option is similar to ‘-filter_complex’, the only difference is that its argument is the name of the file
+     * from which a complex filtergraph description is to be read.
+     */
+    public AVAdvancedOptions filterComplexScript(final String fileName) {
+<span class="fc" id="L121">        return flags(FLAG_FILTER_COMPLEX_SCRIPT, fileName);</span>
+    }
+
+    /**
+     * ‘-shortest (output)’
+     * Finish encoding when the shortest input stream ends.
+     */
+    public AVAdvancedOptions shortest() {
+<span class="fc" id="L129">        return flags(FLAG_SHORTEST);</span>
+    }
+
+    /**
+     * ‘-muxdelay seconds (input)’
+     * Set the maximum demux-decode delay.
+     */
+    public AVAdvancedOptions maxDemuxDelay(final Long seconds) {
+<span class="fc" id="L137">        return flags(FLAG_MAX_DEMUX_DELAY, seconds);</span>
+    }
+
+    /**
+     * ‘-muxpreload seconds (input)’
+     * Set the initial demux-decode delay.
+     */
+    public AVAdvancedOptions demuxPreLoadDelay(final Long seconds) {
+<span class="fc" id="L145">        return flags(FLAG_DEMUX_PRELOAD_DELAY, seconds);</span>
+    }
+
+    /**
+     * ‘-accurate_seek (input)’
+     * This option enables or disables accurate seeking in input files with the ‘-ss’ option.
+     * It is enabled by default, so seeking is accurate when transcoding. Use ‘-noaccurate_seek’ to disable it,
+     * which may be useful e.g. when copying some streams and transcoding the others.
+     */
+    public AVAdvancedOptions accurateSeek(final boolean accurate) {
+<span class="pc bpc" id="L155" title="1 of 2 branches missed.">        return flags(accurate ? FLAG_ACCURATE_SEEK : FLAG_NO_ACCURATE_SEEK);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>

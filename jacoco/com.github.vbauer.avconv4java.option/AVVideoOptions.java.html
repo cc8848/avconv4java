@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AVVideoOptions.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">avconv4java</a> &gt; <a href="index.source.html" class="el_package">com.github.vbauer.avconv4java.option</a> &gt; <span class="el_source">AVVideoOptions.java</span></div><h1>AVVideoOptions.java</h1><pre class="source lang-java linenums">package com.github.vbauer.avconv4java.option;
+
+import com.github.vbauer.avconv4java.core.AVOptions;
+import com.github.vbauer.avconv4java.type.AVMovFlagsType;
+import com.github.vbauer.avconv4java.type.AVStreamType;
+import com.github.vbauer.avconv4java.type.AVVideoCodecType;
+import com.github.vbauer.avconv4java.type.AVVideoSizeType;
+import com.github.vbauer.avconv4java.util.AVUtils;
+
+import java.util.Collection;
+
+/**
+ * @see &lt;a href=&quot;http://libav.org/avconv.html#Video-Options&quot;&gt;Official doc: &quot;5.7 Video Options&quot;&lt;/a&gt;
+ *
+ * @author Vladislav Bauer
+ */
+
+<span class="fc" id="L18">public class AVVideoOptions extends AVOptions {</span>
+
+    public static final String FLAG_VIDEO_FRAMES_COUNT = &quot;-vframes&quot;;
+    public static final String FLAG_FRAME_RATE = &quot;-r&quot;;
+    public static final String FLAG_RESIZE = &quot;-s&quot;;
+    public static final String FLAG_ASPECT_RATIO = &quot;-aspect&quot;;
+    public static final String FLAG_DISABLE_VIDEO_RECORDING = &quot;-vn&quot;;
+    public static final String FLAG_VIDEO_CODEC = &quot;-vcodec&quot;;
+    public static final String FLAG_MOV_FLAGS = &quot;-movflags&quot;;
+    public static final String FLAG_PASS_COUNT = &quot;-pass&quot;;
+    public static final String FLAG_PASS_LOG_FILE_PREFIX = &quot;-passlogfile&quot;;
+    public static final String FLAG_FILTER = &quot;-vf&quot;;
+
+    public static final String FILTER_SCALE_BY_WIDTH = &quot;scale=w=%d:h=trunc(ow/a/2)*2&quot;;
+    public static final String FILTER_SCALE_BY_HEIGHT = &quot;scale=w=trunc(oh/a/2)*2:h=%d&quot;;
+
+
+    public static AVVideoOptions create() {
+<span class="fc" id="L36">        return new AVVideoOptions();</span>
+    }
+
+
+    @Override
+    public AVVideoOptions flags(final Collection&lt;Object&gt; flags) {
+<span class="fc" id="L42">        return (AVVideoOptions) super.flags(flags);</span>
+    }
+
+    @Override
+    public AVVideoOptions flags(final Object... flags) {
+<span class="fc" id="L47">        return (AVVideoOptions) super.flags(flags);</span>
+    }
+
+    @Override
+    public AVVideoOptions builders(final Collection&lt;AVOptions&gt; builders) {
+<span class="fc" id="L52">        return (AVVideoOptions) super.builders(builders);</span>
+    }
+
+    @Override
+    public AVVideoOptions builders(final AVOptions... builders) {
+<span class="fc" id="L57">        return (AVVideoOptions) super.builders(builders);</span>
+    }
+
+
+    /**
+     * ‘-vcodec codec (output)’
+     * Set the video codec. This is an alias for -codec:v.
+     */
+    public AVVideoOptions videoCodec(final AVVideoCodecType codecType) {
+<span class="pc bpc" id="L66" title="1 of 2 branches missed.">        return videoCodec(codecType == null ? null : codecType.getName());</span>
+    }
+
+    public AVVideoOptions videoCodec(final String codecTypeName) {
+<span class="fc" id="L70">        return flags(FLAG_VIDEO_CODEC, codecTypeName);</span>
+    }
+
+    public AVVideoOptions resize(final AVStreamType streamType, final Integer width, final Integer height) {
+<span class="pc bpc" id="L74" title="3 of 4 branches missed.">        final boolean shouldResize = width != null || height != null;</span>
+<span class="fc" id="L75">        final String w = AVUtils.trimToEmpty(even(width));</span>
+<span class="fc" id="L76">        final String h = AVUtils.trimToEmpty(even(height));</span>
+<span class="pc bpc" id="L77" title="1 of 2 branches missed.">        final String size = shouldResize ? String.format(&quot;%sx%s&quot;, w, h) : null;</span>
+<span class="fc" id="L78">        return resize(streamType, size);</span>
+    }
+
+    public AVVideoOptions resize(final AVStreamType streamType, final AVVideoSizeType videoSizeType) {
+<span class="pc bpc" id="L82" title="1 of 2 branches missed.">        return flags(specifyStream(FLAG_RESIZE, streamType), videoSizeType == null ? null : videoSizeType.getName());</span>
+    }
+
+    public AVVideoOptions resize(final AVStreamType streamType, final String size) {
+<span class="fc" id="L86">        return flags(specifyStream(FLAG_RESIZE, streamType), size);</span>
+    }
+
+    /**
+     * ‘-vf filter_graph (output)’
+     * filter_graph is a description of the filter graph to apply to the input video.
+     * Use the option &quot;-filters&quot; to show all the available filters (including also sources and sinks).
+     * This is an alias for -filter:v.
+     */
+    public AVVideoOptions filter(final String filter, final Object... params) {
+<span class="fc" id="L96">        return flags(FLAG_FILTER, format(filter, params));</span>
+    }
+
+    public AVVideoOptions proportionalResizeUsingWidth(final Integer width) {
+<span class="fc" id="L100">        return filter(FILTER_SCALE_BY_WIDTH, even(width));</span>
+    }
+
+    public AVVideoOptions proportionalResizeUsingHeight(final Integer height) {
+<span class="fc" id="L104">        return filter(FILTER_SCALE_BY_HEIGHT, even(height));</span>
+    }
+
+    /**
+     * ‘-r[:stream_specifier] fps (input/output,per-stream)’
+     * Set frame rate (Hz value, fraction or abbreviation).
+     *
+     * As an input option, ignore any timestamps stored in the file and instead generate timestamps assuming constant
+     * frame rate fps.
+     *
+     * As an output option, duplicate or drop input frames to achieve constant output frame rate fps
+     * (note that this actually causes the fps filter to be inserted to the end of the corresponding filtergraph).
+     */
+    public AVVideoOptions frameRate(final AVStreamType streamType, final Integer rate) {
+<span class="fc" id="L118">        return flags(specifyStream(FLAG_FRAME_RATE, streamType), rate);</span>
+    }
+
+    public AVVideoOptions frameRate(final Integer rate) {
+<span class="fc" id="L122">        return frameRate(null, rate);</span>
+    }
+
+    /**
+     * ‘-movflags frag_keyframe’
+     * Start a new fragment at each video keyframe.
+     */
+    public AVVideoOptions movFlags(final AVMovFlagsType movFlagsType) {
+<span class="pc bpc" id="L130" title="1 of 2 branches missed.">        return movFlags(movFlagsType == null ? null : movFlagsType.getName());</span>
+    }
+
+    public AVVideoOptions movFlags(final String movFlagsTypeName) {
+<span class="fc" id="L134">        return flags(FLAG_MOV_FLAGS, movFlagsTypeName);</span>
+    }
+
+    /**
+     * ‘-vframes number (output)’
+     * Set the number of video frames to record. This is an alias for -frames:v.
+     */
+    public AVVideoOptions framesCount(final Long count) {
+<span class="fc" id="L142">        return flags(FLAG_VIDEO_FRAMES_COUNT, count);</span>
+    }
+
+    /**
+     * ‘-aspect[:stream_specifier] aspect (output,per-stream)’
+     * Set the video display aspect ratio specified by aspect.
+     *
+     * aspect can be a floating point number string, or a string of the form num:den, where num and den are the
+     * numerator and denominator of the aspect ratio. For example &quot;4:3&quot;, &quot;16:9&quot;, &quot;1.3333&quot;, and &quot;1.7777&quot; are valid
+     * argument values.
+     */
+    public AVVideoOptions aspectRatio(final AVStreamType streamType, final String ratio) {
+<span class="fc" id="L154">        return flags(specifyStream(FLAG_ASPECT_RATIO, streamType), ratio);</span>
+    }
+
+    public AVVideoOptions aspectRatio(final String ratio) {
+<span class="fc" id="L158">        return aspectRatio(null, ratio);</span>
+    }
+
+    public AVVideoOptions aspectRatio(final AVStreamType streamType, final Integer width, final Integer height) {
+<span class="fc" id="L162">        return aspectRatio(streamType, format(&quot;%d:%d&quot;, width, height));</span>
+    }
+
+    public AVVideoOptions aspectRatio(final Integer width, final Integer height) {
+<span class="fc" id="L166">        return aspectRatio(null, width, height);</span>
+    }
+
+    public AVVideoOptions aspectRatio(final AVStreamType streamType, final Double ratio) {
+<span class="fc" id="L170">        return aspectRatio(streamType, format(&quot;%.4f&quot;, ratio));</span>
+    }
+
+    public AVVideoOptions aspectRatio(final Double ratio) {
+<span class="fc" id="L174">        return aspectRatio(null, ratio);</span>
+    }
+
+    /**
+     * ‘-vn (output)’
+     * Disable video recording.
+     */
+    public AVVideoOptions disableRecording() {
+<span class="fc" id="L182">        return flags(FLAG_DISABLE_VIDEO_RECORDING);</span>
+    }
+
+    /**
+     * ‘-pass[:stream_specifier] n (output,per-stream)’
+     * Select the pass number (1 or 2). It is used to do two-pass video encoding. The statistics of the video are
+     * recorded in the first pass into a log file (see also the option -passlogfile), and in the second pass that log
+     * file is used to generate the video at the exact requested bitrate. On pass 1, you may just deactivate audio
+     * and set output to null, examples for Windows and Unix:
+     *
+     * avconv -i foo.mov -c:v libxvid -pass 1 -an -f rawvideo -y NUL
+     * avconv -i foo.mov -c:v libxvid -pass 1 -an -f rawvideo -y /dev/null
+     */
+    public AVVideoOptions passCount(final AVStreamType streamType, final Integer pass) {
+<span class="fc" id="L196">        return flags(specifyStream(FLAG_PASS_COUNT, streamType), pass);</span>
+    }
+
+    public AVVideoOptions passCount(final Integer pass) {
+<span class="fc" id="L200">        return passCount(null, pass);</span>
+    }
+
+    public AVVideoOptions onePassEncoding(final AVStreamType streamType) {
+<span class="fc" id="L204">        return passCount(streamType, 1);</span>
+    }
+
+    public AVVideoOptions onePassEncoding() {
+<span class="fc" id="L208">        return onePassEncoding(null);</span>
+    }
+
+    public AVVideoOptions twoPassEncoding(final AVStreamType streamType) {
+<span class="fc" id="L212">        return passCount(streamType, 2);</span>
+    }
+
+    public AVVideoOptions twoPassEncoding() {
+<span class="fc" id="L216">        return twoPassEncoding(null);</span>
+    }
+
+    /**
+     * ‘-passlogfile[:stream_specifier] prefix (output,per-stream)’
+     * Set two-pass log file name prefix to prefix, the default file name prefix is “av2pass”.
+     * The complete file name will be ‘PREFIX-N.log’, where N is a number specific to the output stream.
+     */
+    public AVVideoOptions passLogFilePrefix(final AVStreamType streamType, final String prefix) {
+<span class="fc" id="L225">        return flags(specifyStream(FLAG_PASS_LOG_FILE_PREFIX, streamType), prefix);</span>
+    }
+
+    public AVVideoOptions passLogFilePrefix(final String prefix) {
+<span class="fc" id="L229">        return passLogFilePrefix(null, prefix);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>

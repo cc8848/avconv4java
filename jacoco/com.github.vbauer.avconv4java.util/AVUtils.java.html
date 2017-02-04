@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AVUtils.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">avconv4java</a> &gt; <a href="index.source.html" class="el_package">com.github.vbauer.avconv4java.util</a> &gt; <span class="el_source">AVUtils.java</span></div><h1>AVUtils.java</h1><pre class="source lang-java linenums">package com.github.vbauer.avconv4java.util;
+
+import com.github.vbauer.avconv4java.type.NamedType;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Map;
+
+/**
+ * Generic utils.
+ *
+ * @author Vladislav Bauer
+ */
+
+public final class AVUtils {
+
+    public static final String SYSTEM_PROPERTY_OS_NAME = &quot;os.name&quot;;
+    public static final String SYSTEM_PROPERTY_LINE_SEPARATOR = &quot;line.separator&quot;;
+
+    public static final String SPACE = &quot; &quot;;
+    public static final String EMPTY = &quot;&quot;;
+
+<span class="fc" id="L27">    private static final String OS = getSystemProperty(SYSTEM_PROPERTY_OS_NAME).toLowerCase();</span>
+<span class="fc" id="L28">    private static final String LINE_SEPARATOR = getSystemProperty(SYSTEM_PROPERTY_LINE_SEPARATOR);</span>
+
+
+<span class="fc" id="L31">    private AVUtils() {</span>
+<span class="fc" id="L32">        throw new UnsupportedOperationException();</span>
+    }
+
+
+    public static boolean hasNull(final Object... arguments) {
+<span class="fc bfc" id="L37" title="All 2 branches covered.">        if (!isEmpty(arguments)) {</span>
+<span class="fc bfc" id="L38" title="All 2 branches covered.">            for (final Object argument : arguments) {</span>
+<span class="fc bfc" id="L39" title="All 2 branches covered.">                if (argument == null) {</span>
+<span class="fc" id="L40">                    return true;</span>
+                }
+            }
+<span class="fc" id="L43">            return false;</span>
+        }
+<span class="fc" id="L45">        return true;</span>
+    }
+
+    public static boolean isEmpty(final Object... arguments) {
+<span class="fc bfc" id="L49" title="All 4 branches covered.">        return arguments == null || arguments.length == 0;</span>
+    }
+
+    public static boolean isEmpty(final Map map) {
+<span class="pc bpc" id="L53" title="1 of 4 branches missed.">        return map == null || map.isEmpty();</span>
+    }
+
+    public static boolean isEmpty(final Collection list) {
+<span class="fc bfc" id="L57" title="All 4 branches covered.">        return list == null || list.isEmpty();</span>
+    }
+
+    public static boolean isBlank(final Object text) {
+<span class="fc bfc" id="L61" title="All 2 branches covered.">        return trimToNull(text) == null;</span>
+    }
+
+    public static String trimToNull(final Object text) {
+<span class="fc bfc" id="L65" title="All 2 branches covered.">        if (text != null) {</span>
+<span class="fc" id="L66">            final String trim = text.toString().trim();</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">            return trim.length() &gt; 0 ? trim : null;</span>
+        }
+<span class="fc" id="L69">        return null;</span>
+    }
+
+    public static String trimToEmpty(final Object text) {
+<span class="fc bfc" id="L73" title="All 2 branches covered.">        return text != null ? text.toString().trim() : EMPTY;</span>
+    }
+
+    public static String join(final String... arguments) {
+<span class="fc bfc" id="L77" title="All 2 branches covered.">        return join(isEmpty((Object[]) arguments) ? null : Arrays.asList(arguments), SPACE);</span>
+    }
+
+    public static String join(final Iterable&lt;String&gt; arguments) {
+<span class="fc" id="L81">        return join(arguments, SPACE);</span>
+    }
+
+    public static String join(final Iterable&lt;String&gt; arguments, final String delimiter) {
+<span class="fc" id="L85">        final StringBuilder buffer = new StringBuilder();</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">        if (arguments != null) {</span>
+<span class="fc" id="L87">            boolean first = true;</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">            for (final String arg : arguments) {</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">                if (arg != null) {</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">                    if (first) {</span>
+<span class="fc" id="L91">                        first = false;</span>
+                    } else {
+<span class="fc" id="L93">                        buffer.append(delimiter);</span>
+                    }
+<span class="fc" id="L95">                    buffer.append(arg);</span>
+                }
+<span class="fc" id="L97">            }</span>
+        }
+<span class="fc" id="L99">        return trimToNull(buffer);</span>
+    }
+
+
+    public static boolean isWindows() {
+<span class="nc" id="L104">        return OS.contains(&quot;win&quot;);</span>
+    }
+
+    public static boolean isMac() {
+<span class="fc" id="L108">        return OS.contains(&quot;mac&quot;);</span>
+    }
+
+    public static boolean isUnix() {
+<span class="pc bpc" id="L112" title="4 of 6 branches missed.">        return OS.contains(&quot;nix&quot;) || OS.contains(&quot;nux&quot;) || OS.contains(&quot;aix&quot;);</span>
+    }
+
+    public static boolean isSolaris() {
+<span class="fc" id="L116">        return OS.contains(&quot;sunos&quot;);</span>
+    }
+
+    public static String getSystemProperty(final String key) {
+<span class="fc" id="L120">        final String envProperty = System.getenv(key);</span>
+<span class="pc bpc" id="L121" title="1 of 2 branches missed.">        return envProperty == null ? System.getProperty(key) : envProperty;</span>
+    }
+
+    public static String readFully(final InputStream inputStream) {
+<span class="fc" id="L125">        final Charset charset = Charset.defaultCharset();</span>
+
+<span class="pc" id="L127">        try (</span>
+<span class="fc" id="L128">            final InputStreamReader streamReader = new InputStreamReader(inputStream, charset);</span>
+<span class="fc" id="L129">            final BufferedReader reader = new BufferedReader(streamReader)</span>
+        ) {
+<span class="fc" id="L131">            final StringBuilder result = new StringBuilder();</span>
+            String line;
+
+<span class="fc bfc" id="L134" title="All 2 branches covered.">            while ((line = reader.readLine()) != null) {</span>
+<span class="fc" id="L135">                result.append(line);</span>
+<span class="fc" id="L136">                result.append(LINE_SEPARATOR);</span>
+            }
+<span class="fc" id="L138">            return result.toString();</span>
+<span class="pc bpc" id="L139" title="12 of 16 branches missed.">        } catch (final Throwable ex) {</span>
+<span class="fc" id="L140">            return null;</span>
+        }
+    }
+
+    public static &lt;T extends Enum &amp; NamedType&gt; T findByName(
+        final Class&lt;T&gt; enumClass, final String name
+    ) {
+<span class="fc" id="L147">        final T[] values = enumClass.getEnumConstants();</span>
+<span class="fc bfc" id="L148" title="All 2 branches covered.">        for (final T value : values) {</span>
+<span class="fc" id="L149">            final String valueName = value.getName();</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">            if (valueName.equalsIgnoreCase(name)) {</span>
+<span class="fc" id="L151">                return value;</span>
+            }
+        }
+<span class="fc" id="L154">        return null;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>

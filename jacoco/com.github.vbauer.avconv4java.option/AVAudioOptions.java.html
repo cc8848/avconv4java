@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AVAudioOptions.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">avconv4java</a> &gt; <a href="index.source.html" class="el_package">com.github.vbauer.avconv4java.option</a> &gt; <span class="el_source">AVAudioOptions.java</span></div><h1>AVAudioOptions.java</h1><pre class="source lang-java linenums">package com.github.vbauer.avconv4java.option;
+
+import com.github.vbauer.avconv4java.core.AVOptions;
+import com.github.vbauer.avconv4java.type.AVAudioCodecType;
+import com.github.vbauer.avconv4java.type.AVStreamType;
+
+import java.util.Collection;
+
+/**
+ * @see &lt;a href=&quot;http://libav.org/avconv.html#Audio-Options&quot;&gt;Official doc: &quot;5.9 Audio Options&quot;&lt;/a&gt;
+ *
+ * @author Vladislav Bauer
+ */
+
+<span class="fc" id="L15">public class AVAudioOptions extends AVOptions {</span>
+
+    public static final String FLAG_AUDIO_FRAMES_COUNT = &quot;-aframes&quot;;
+    public static final String FLAG_SAMPLE_RATE = &quot;-ar&quot;;
+    public static final String FLAG_AUDIO_QUALITY = &quot;-aq&quot;;
+    public static final String FLAG_AUDIO_CHANNELS_COUNT = &quot;-ac&quot;;
+    public static final String FLAG_DISABLE_AUDIO_RECORDING = &quot;-an&quot;;
+    public static final String FLAG_AUDIO_CODEC = &quot;-acodec&quot;;
+    public static final String FLAG_AUDIO_BIT_RATE = &quot;-ab&quot;;
+    public static final String FLAG_SAMPLE_FORMAT = &quot;-sample_fmt&quot;;
+    public static final String FLAG_FILTER_GRAPH = &quot;-af&quot;;
+
+
+    public static AVAudioOptions create() {
+<span class="fc" id="L29">        return new AVAudioOptions();</span>
+    }
+
+
+    @Override
+    public AVAudioOptions flags(final Collection&lt;Object&gt; flags) {
+<span class="fc" id="L35">        return (AVAudioOptions) super.flags(flags);</span>
+    }
+
+    @Override
+    public AVAudioOptions flags(final Object... flags) {
+<span class="fc" id="L40">        return (AVAudioOptions) super.flags(flags);</span>
+    }
+
+    @Override
+    public AVAudioOptions builders(final Collection&lt;AVOptions&gt; builders) {
+<span class="fc" id="L45">        return (AVAudioOptions) super.builders(builders);</span>
+    }
+
+    @Override
+    public AVAudioOptions builders(final AVOptions... builders) {
+<span class="fc" id="L50">        return (AVAudioOptions) super.builders(builders);</span>
+    }
+
+
+    /**
+     * ‘-aq q (output)’
+     * Set the audio quality (codec-specific, VBR). This is an alias for -q:a.
+     */
+    public AVAudioOptions audioQuality(final Double quality) {
+<span class="fc" id="L59">        return flags(FLAG_AUDIO_QUALITY, format(&quot;%.4f&quot;, quality));</span>
+    }
+
+    /**
+     * ‘-acodec codec (input/output)’
+     * Set the audio codec. This is an alias for -codec:a.
+     */
+    public AVAudioOptions audioCodec(final AVAudioCodecType codecType) {
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">        return audioCodec(codecType == null ? null : codecType.getName());</span>
+    }
+
+    public AVAudioOptions audioCodec(final String codecTypeName) {
+<span class="fc" id="L71">        return flags(FLAG_AUDIO_CODEC, codecTypeName);</span>
+    }
+
+    public AVAudioOptions audioBitRate(final Integer bitRate) {
+<span class="fc" id="L75">        return flags(FLAG_AUDIO_BIT_RATE, kb(bitRate));</span>
+    }
+
+    /**
+     * ‘-an (output)’
+     * Disable audio recording.
+     */
+    public AVAudioOptions disableRecording() {
+<span class="fc" id="L83">        return flags(FLAG_DISABLE_AUDIO_RECORDING);</span>
+    }
+
+    /**
+     * ‘-aframes number (output)’
+     * Set the number of audio frames to record. This is an alias for -frames:a.
+     */
+    public AVAudioOptions framesCount(final Long count) {
+<span class="fc" id="L91">        return flags(FLAG_AUDIO_FRAMES_COUNT, count);</span>
+    }
+
+    /**
+     * ‘-ac[:stream_specifier] channels (input/output,per-stream)’
+     * Set the number of audio channels. For output streams it is set by default to the number of input audio channels.
+     * For input streams this option only makes sense for audio grabbing devices and raw demuxers and is mapped to the
+     * corresponding demuxer options.
+     */
+    public AVAudioOptions audioChannelsCount(final AVStreamType streamType, final Integer count) {
+<span class="fc" id="L101">        return flags(specifyStream(FLAG_AUDIO_CHANNELS_COUNT, streamType), count);</span>
+    }
+
+    public AVAudioOptions audioChannelsCount(final Integer count) {
+<span class="fc" id="L105">        return audioChannelsCount(null, count);</span>
+    }
+
+    /**
+     ‘-ar[:stream_specifier] freq (input/output,per-stream)’
+     * Set the audio sampling frequency. For output streams it is set by default to the frequency of the corresponding
+     * input stream. For input streams this option only makes sense for audio grabbing devices and raw demuxers and is
+     * mapped to the corresponding demuxer options.
+     */
+    public AVAudioOptions sampleRate(final AVStreamType streamType, final Integer sampleRate) {
+<span class="fc" id="L115">        return flags(specifyStream(FLAG_SAMPLE_RATE, streamType), sampleRate);</span>
+    }
+
+    public AVAudioOptions sampleRate(final Integer sampleRate) {
+<span class="fc" id="L119">        return sampleRate(null, sampleRate);</span>
+    }
+
+    /**
+     * ‘-sample_fmt[:stream_specifier] sample_fmt (output,per-stream)’
+     * Set the audio sample format. Use -sample_fmts to get a list of supported sample formats.
+     */
+    public AVAudioOptions sampleFormat(final AVStreamType streamType, final String format) {
+<span class="fc" id="L127">        return flags(specifyStream(FLAG_SAMPLE_FORMAT, streamType), format);</span>
+    }
+
+    public AVAudioOptions sampleFormat(final String format) {
+<span class="fc" id="L131">        return sampleFormat(null, format);</span>
+    }
+
+    /**
+     * ‘-af filter_graph (output)’
+     * filter_graph is a description of the filter graph to apply to the input audio. Use the option &quot;-filters&quot; to
+     * show all the available filters (including also sources and sinks). This is an alias for -filter:a.
+     */
+    public AVAudioOptions filter(final String filter) {
+<span class="fc" id="L140">        return flags(FLAG_FILTER_GRAPH, filter);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>

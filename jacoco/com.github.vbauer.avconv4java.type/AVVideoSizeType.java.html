@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AVVideoSizeType.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">avconv4java</a> &gt; <a href="index.source.html" class="el_package">com.github.vbauer.avconv4java.type</a> &gt; <span class="el_source">AVVideoSizeType.java</span></div><h1>AVVideoSizeType.java</h1><pre class="source lang-java linenums">package com.github.vbauer.avconv4java.type;
+
+/**
+ * @author Vladislav Bauer
+ */
+
+<span class="pc" id="L7">public enum AVVideoSizeType implements NamedType {</span>
+
+<span class="fc" id="L9">    SQCIF(Constants.SQCIF, 128, 96),</span>
+
+<span class="fc" id="L11">    QCIF(Constants.QCIF, 176, 144),</span>
+
+<span class="fc" id="L13">    CIF(Constants.CIF, 352, 288),</span>
+
+<span class="fc" id="L15">    CIF4(Constants.CIF4, 704, 576),</span>
+
+<span class="fc" id="L17">    CIF16(Constants.CIF16, 1408, 1152),</span>
+
+<span class="fc" id="L19">    QQVGA(Constants.QQVGA, 160, 120),</span>
+
+<span class="fc" id="L21">    QVGA(Constants.QVGA, 320, 240),</span>
+
+<span class="fc" id="L23">    VGA(Constants.VGA, 640, 480),</span>
+
+<span class="fc" id="L25">    SVGA(Constants.SVGA, 800, 600),</span>
+
+<span class="fc" id="L27">    XGA(Constants.XGA, 1024, 768),</span>
+
+<span class="fc" id="L29">    UXGA(Constants.UXGA, 1600, 1200),</span>
+
+<span class="fc" id="L31">    QXGA(Constants.QXGA, 2048, 1536),</span>
+
+<span class="fc" id="L33">    SXGA(Constants.SXGA, 1280, 1024),</span>
+
+<span class="fc" id="L35">    QSXGA(Constants.QSXGA, 2560, 2048),</span>
+
+<span class="fc" id="L37">    HSXGA(Constants.HSXGA, 5120, 4096),</span>
+
+<span class="fc" id="L39">    WVGA(Constants.WVGA, 852, 480),</span>
+
+<span class="fc" id="L41">    WXGA(Constants.WXGA, 1366, 768),</span>
+
+<span class="fc" id="L43">    WSXGA(Constants.WSXGA, 1600, 1024),</span>
+
+<span class="fc" id="L45">    WUXGA(Constants.WUXGA, 1920, 1200),</span>
+
+<span class="fc" id="L47">    WOXGA(Constants.WOXGA, 2560, 1600),</span>
+
+<span class="fc" id="L49">    WQSXGA(Constants.WQSXGA, 3200, 2048),</span>
+
+<span class="fc" id="L51">    WQUXGA(Constants.WQUXGA, 3840, 2400),</span>
+
+<span class="fc" id="L53">    WHSXGA(Constants.WHSXGA, 6400, 4096),</span>
+
+<span class="fc" id="L55">    WHUXGA(Constants.WHUXGA, 7680, 4800),</span>
+
+<span class="fc" id="L57">    CGA(Constants.CGA, 320, 200),</span>
+
+<span class="fc" id="L59">    EGA(Constants.EGA, 640, 350),</span>
+
+<span class="fc" id="L61">    HD480(Constants.HD480, 852, 480),</span>
+
+<span class="fc" id="L63">    HD720(Constants.HD720, 1280, 720),</span>
+
+<span class="fc" id="L65">    HD1080(Constants.HD1080, 1920, 1080);</span>
+
+
+    private final String name;
+    private final int width;
+    private final int height;
+
+
+<span class="fc" id="L73">    AVVideoSizeType(final String name, final int width, final int height) {</span>
+<span class="fc" id="L74">        this.name = name;</span>
+<span class="fc" id="L75">        this.width = width;</span>
+<span class="fc" id="L76">        this.height = height;</span>
+<span class="fc" id="L77">    }</span>
+
+
+    @Override
+    public String getName() {
+<span class="fc" id="L82">        return name;</span>
+    }
+
+    public int getWidth() {
+<span class="fc" id="L86">        return width;</span>
+    }
+
+    public int getHeight() {
+<span class="fc" id="L90">        return height;</span>
+    }
+
+
+    public static AVVideoSizeType findByName(final String name) {
+<span class="fc bfc" id="L95" title="All 2 branches covered.">        for (final AVVideoSizeType type : values()) {</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">            if (type.getName().equalsIgnoreCase(name)) {</span>
+<span class="fc" id="L97">                return type;</span>
+            }
+        }
+<span class="fc" id="L100">        return null;</span>
+    }
+
+
+    /**
+     * @author Vladislav Bauer
+     */
+
+    public static final class Constants {
+
+        public static final String SQCIF = &quot;sqcif&quot;;
+        public static final String QCIF = &quot;qcif&quot;;
+        public static final String CIF = &quot;cif&quot;;
+        public static final String CIF4 = &quot;4cif&quot;;
+        public static final String CIF16 = &quot;16cif&quot;;
+        public static final String QQVGA = &quot;qqvga&quot;;
+        public static final String QVGA = &quot;qvga&quot;;
+        public static final String VGA = &quot;vga&quot;;
+        public static final String SVGA = &quot;svga&quot;;
+        public static final String XGA = &quot;xga&quot;;
+        public static final String UXGA = &quot;uxga&quot;;
+        public static final String QXGA = &quot;qxga&quot;;
+        public static final String SXGA = &quot;sxga&quot;;
+        public static final String QSXGA = &quot;qsxga&quot;;
+        public static final String HSXGA = &quot;hsxga&quot;;
+        public static final String WVGA = &quot;wvga&quot;;
+        public static final String WXGA = &quot;wxga&quot;;
+        public static final String WSXGA = &quot;wsxga&quot;;
+        public static final String WUXGA = &quot;wuxga&quot;;
+        public static final String WOXGA = &quot;woxga&quot;;
+        public static final String WQSXGA = &quot;wqsxga&quot;;
+        public static final String WQUXGA = &quot;wquxga&quot;;
+        public static final String WHSXGA = &quot;whsxga&quot;;
+        public static final String WHUXGA = &quot;whuxga&quot;;
+        public static final String CGA = &quot;cga&quot;;
+        public static final String EGA = &quot;ega&quot;;
+        public static final String HD480 = &quot;hd480&quot;;
+        public static final String HD720 = &quot;hd720&quot;;
+        public static final String HD1080 = &quot;hd1080&quot;;
+
+
+<span class="fc" id="L141">        private Constants() {</span>
+<span class="fc" id="L142">            throw new UnsupportedOperationException();</span>
+        }
+
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>

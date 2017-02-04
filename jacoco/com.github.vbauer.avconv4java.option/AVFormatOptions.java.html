@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AVFormatOptions.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">avconv4java</a> &gt; <a href="index.source.html" class="el_package">com.github.vbauer.avconv4java.option</a> &gt; <span class="el_source">AVFormatOptions.java</span></div><h1>AVFormatOptions.java</h1><pre class="source lang-java linenums">package com.github.vbauer.avconv4java.option;
+
+import com.github.vbauer.avconv4java.core.AVOptions;
+import com.github.vbauer.avconv4java.type.AVErrorDetectionType;
+import com.github.vbauer.avconv4java.type.AVFormatDebugInfoType;
+import com.github.vbauer.avconv4java.type.AVFormatFlagType;
+
+import java.util.Collection;
+
+/**
+ * @see &lt;a href=&quot;http://libav.org/avconv.html#Format-AVOptions&quot;&gt;Official doc: &quot;5.5 Format AVOptions&quot;&lt;/a&gt;
+ *
+ * @author Vladislav Bauer
+ */
+
+<span class="fc" id="L16">public class AVFormatOptions extends AVOptions {</span>
+
+    public static final String FLAG_PROBE_SIZE = &quot;-probesize&quot;;
+    public static final String FLAG_PACKET_SIZE = &quot;-packetsize&quot;;
+    public static final String FLAG_FORMAT_FLAGS = &quot;-fflags&quot;;
+    public static final String FLAG_ANALYZE_DURATION = &quot;-analyzeduration&quot;;
+    public static final String FLAG_DECRYPTION_KEY = &quot;-cryptokey&quot;;
+    public static final String FLAG_TIMESTAMP_INDEX_SIZE = &quot;-indexmem&quot;;
+    public static final String FLAG_REAL_TIME_BUFFER_SIZE = &quot;-rtbufsize&quot;;
+    public static final String FLAG_DEBUG_INFO = &quot;-fdebug&quot;;
+    public static final String FLAG_MAX_DELAY = &quot;-max_delay&quot;;
+    public static final String FLAG_FPS_PROBE_SIZE = &quot;-fpsprobesize&quot;;
+    public static final String FLAG_ERROR_DETECTION = &quot;-err_detect&quot;;
+    public static final String FLAG_INTERLEAVING_BUFFER_SIZE = &quot;-max_interleave_delta&quot;;
+
+
+    public static AVFormatOptions create() {
+<span class="fc" id="L33">        return new AVFormatOptions();</span>
+    }
+
+
+    @Override
+    public AVFormatOptions flags(final Collection&lt;Object&gt; flags) {
+<span class="fc" id="L39">        return (AVFormatOptions) super.flags(flags);</span>
+    }
+
+    @Override
+    public AVFormatOptions flags(final Object... flags) {
+<span class="fc" id="L44">        return (AVFormatOptions) super.flags(flags);</span>
+    }
+
+    @Override
+    public AVFormatOptions builders(final Collection&lt;AVOptions&gt; builders) {
+<span class="fc" id="L49">        return (AVFormatOptions) super.builders(builders);</span>
+    }
+
+    @Override
+    public AVFormatOptions builders(final AVOptions... builders) {
+<span class="fc" id="L54">        return (AVFormatOptions) super.builders(builders);</span>
+    }
+
+
+    /**
+     * ‘-probesize integer (input)’
+     * set probing size
+     */
+    public AVFormatOptions probeSize(final Long size) {
+<span class="fc" id="L63">        return flags(FLAG_PROBE_SIZE, size);</span>
+    }
+
+    /**
+     * ‘-packetsize integer (output)’
+     * set packet size
+     */
+    public AVFormatOptions packetSize(final Long size) {
+<span class="fc" id="L71">        return flags(FLAG_PACKET_SIZE, size);</span>
+    }
+
+    /**
+     * ‘-fflags flags (input/output)’
+     */
+    public AVFormatOptions formatFlags(final AVFormatFlagType formatFlagType) {
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">        return formatFlags(formatFlagType == null ? null : formatFlagType.getName());</span>
+    }
+
+    public AVFormatOptions formatFlags(final String formatFlagTypeName) {
+<span class="fc" id="L82">        return flags(FLAG_FORMAT_FLAGS, formatFlagTypeName);</span>
+    }
+
+    /**
+     * ‘-analyzeduration integer (input)’
+     * how many microseconds are analyzed to estimate duration
+     */
+    public AVFormatOptions analyzeDuration(final Long duration) {
+<span class="fc" id="L90">        return flags(FLAG_ANALYZE_DURATION, duration);</span>
+    }
+
+    /**
+     * ‘-cryptokey hexadecimal string (input)’
+     * decryption key
+     */
+    public AVFormatOptions decryptionKey(final String key) {
+<span class="fc" id="L98">        return flags(FLAG_DECRYPTION_KEY, key);</span>
+    }
+
+    /**
+     * ‘-indexmem integer (input)’
+     * max memory used for timestamp index (per stream)
+     */
+    public AVFormatOptions timestampIndexSize(final Long maxMemory) {
+<span class="fc" id="L106">        return flags(FLAG_TIMESTAMP_INDEX_SIZE, maxMemory);</span>
+    }
+
+    /**
+     * ‘-rtbufsize integer (input)’
+     * max memory used for buffering real-time frames
+     */
+    public AVFormatOptions realTimeBufferSize(final Long maxMemory) {
+<span class="fc" id="L114">        return flags(FLAG_REAL_TIME_BUFFER_SIZE, maxMemory);</span>
+    }
+
+    /**
+     * ‘-fdebug flags (input/output)’
+     * print specific debug info
+     */
+    public AVFormatOptions debugInfo(final AVFormatDebugInfoType debugInfoType) {
+<span class="pc bpc" id="L122" title="1 of 2 branches missed.">        return debugInfo(debugInfoType == null ? null : debugInfoType.getName());</span>
+    }
+
+    public AVFormatOptions debugInfo(final String debugInfoTypeName) {
+<span class="fc" id="L126">        return flags(FLAG_DEBUG_INFO, debugInfoTypeName);</span>
+    }
+
+    /**
+     * ‘-max_delay integer (input/output)’
+     * maximum muxing or demuxing delay in microseconds
+     */
+    public AVFormatOptions maxDelay(final Long delay) {
+<span class="fc" id="L134">        return flags(FLAG_MAX_DELAY, delay);</span>
+    }
+
+    /**
+     * ‘-fpsprobesize integer (input)’
+     * number of frames used to probe fps
+     */
+    public AVFormatOptions fpsProbeSize(final Long size) {
+<span class="fc" id="L142">        return flags(FLAG_FPS_PROBE_SIZE, size);</span>
+    }
+
+    /**
+     * ‘-f_err_detect flags (input)’
+     * set error detection flags (deprecated; use err_detect, save via avconv)
+     */
+    public AVFormatOptions errorDetection(final AVErrorDetectionType errorDetectionType) {
+<span class="pc bpc" id="L150" title="1 of 2 branches missed.">        return errorDetection(errorDetectionType == null ? null : errorDetectionType.getName());</span>
+    }
+
+    public AVFormatOptions errorDetection(final String errorDetectionTypeName) {
+<span class="fc" id="L154">        return flags(FLAG_ERROR_DETECTION, errorDetectionTypeName);</span>
+    }
+
+    public AVFormatOptions interleavingBufferSize(final Long size) {
+<span class="fc" id="L158">        return flags(FLAG_INTERLEAVING_BUFFER_SIZE, size);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>

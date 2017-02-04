@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AVRootOptions.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">avconv4java</a> &gt; <a href="index.source.html" class="el_package">com.github.vbauer.avconv4java.core</a> &gt; <span class="el_source">AVRootOptions.java</span></div><h1>AVRootOptions.java</h1><pre class="source lang-java linenums">package com.github.vbauer.avconv4java.core;
+
+import java.util.Collection;
+import java.util.List;
+
+/**
+ * Root options. All other options should be use as part of it.
+ *
+ * @author Vladislav Bauer
+ */
+
+public class AVRootOptions extends AVOptions {
+
+    public static final String FLAG_INPUT_FILE = &quot;-i&quot;;
+
+
+    private final String outputFile;
+
+
+<span class="fc" id="L20">    public AVRootOptions(final String inputFile, final String outputFile) {</span>
+<span class="fc" id="L21">        this.outputFile = outputFile;</span>
+<span class="fc" id="L22">        inputFile(inputFile);</span>
+<span class="fc" id="L23">    }</span>
+
+
+    public static AVRootOptions create(final String inputFile, final String outputFile) {
+<span class="fc" id="L27">        return new AVRootOptions(inputFile, outputFile);</span>
+    }
+
+
+    @Override
+    public AVRootOptions flags(final Collection&lt;Object&gt; flags) {
+<span class="fc" id="L33">        return (AVRootOptions) super.flags(flags);</span>
+    }
+
+    @Override
+    public AVRootOptions flags(final Object... flags) {
+<span class="fc" id="L38">        return (AVRootOptions) super.flags(flags);</span>
+    }
+
+    @Override
+    public AVRootOptions builders(final Collection&lt;AVOptions&gt; builders) {
+<span class="fc" id="L43">        return (AVRootOptions) super.builders(builders);</span>
+    }
+
+    @Override
+    public AVRootOptions builders(final AVOptions... builders) {
+<span class="fc" id="L48">        return (AVRootOptions) super.builders(builders);</span>
+    }
+
+    @Override
+    public List&lt;String&gt; build() {
+<span class="fc" id="L53">        final List&lt;String&gt; result = super.build();</span>
+<span class="fc" id="L54">        result.add(outputFile);</span>
+<span class="fc" id="L55">        return result;</span>
+    }
+
+
+    public String getOutputFile() {
+<span class="fc" id="L60">        return outputFile;</span>
+    }
+
+
+    /**
+     * E‘-i filename (input)’
+     * input file name
+     */
+    private void inputFile(final String filename) {
+<span class="fc" id="L69">        flags(FLAG_INPUT_FILE, filename);</span>
+<span class="fc" id="L70">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>

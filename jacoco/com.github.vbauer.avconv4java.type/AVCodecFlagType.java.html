@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AVCodecFlagType.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">avconv4java</a> &gt; <a href="index.source.html" class="el_package">com.github.vbauer.avconv4java.type</a> &gt; <span class="el_source">AVCodecFlagType.java</span></div><h1>AVCodecFlagType.java</h1><pre class="source lang-java linenums">package com.github.vbauer.avconv4java.type;
+
+import com.github.vbauer.avconv4java.util.AVUtils;
+
+/**
+ * @author Vladislav Bauer
+ */
+
+<span class="pc" id="L9">public enum AVCodecFlagType implements NamedType {</span>
+
+    /**
+     * Allow decoders to produce unaligned output.
+     */
+<span class="fc" id="L14">    UNALIGNED(Constants.UNALIGNED),</span>
+
+    /**
+     * Use four motion vectors per macroblock (MPEG-4).
+     */
+<span class="fc" id="L19">    MV4(Constants.MV4),</span>
+
+    /**
+     * Use 1/4-pel motion compensation.
+     */
+<span class="fc" id="L24">    QPEL(Constants.QPEL),</span>
+
+    /**
+     * Use loop filter.
+     */
+<span class="fc" id="L29">    LOOP(Constants.LOOP),</span>
+
+    /**
+     * Use fixed qscale.
+     */
+<span class="fc" id="L34">    QSCALE(Constants.QSCALE),</span>
+
+    /**
+     * Use gmc.
+     */
+<span class="fc" id="L39">    GMC(Constants.GMC),</span>
+
+    /**
+     * Always try a mb with mv=&lt;0,0&gt;.
+     */
+<span class="fc" id="L44">    MV0(Constants.MV0),</span>
+
+    /**
+     * Use internal 2-pass ratecontrol in first pass mode.
+     */
+<span class="fc" id="L49">    INPUT_PRESERVED(Constants.INPUT_PRESERVED),</span>
+
+<span class="fc" id="L51">    PASS1(Constants.PASS1),</span>
+
+    /**
+     * Use internal 2-pass ratecontrol in second pass mode.
+     */
+<span class="fc" id="L56">    PASS2(Constants.PASS2),</span>
+
+    /**
+     * Only decode/encode grayscale.
+     */
+<span class="fc" id="L61">    GRAY(Constants.GRAY),</span>
+
+    /**
+     * Do not draw edges.
+     */
+<span class="fc" id="L66">    EMU_EDGE(Constants.EMU_EDGE),</span>
+
+    /**
+     * Error[?] variables will be set during encoding.
+     */
+<span class="fc" id="L71">    PSNR(Constants.PSNR),</span>
+
+    /**
+     * Normalize adaptive quantization.
+     */
+<span class="fc" id="L76">    TRUNCATED(Constants.TRUNCATED),</span>
+
+<span class="fc" id="L78">    NAQ(Constants.NAQ),</span>
+
+    /**
+     * Use interlaced DCT.
+     */
+<span class="fc" id="L83">    ILDCT(Constants.ILDCT),</span>
+
+    /**
+     * Force low delay.
+     */
+<span class="fc" id="L88">    LOW_DELAY(Constants.LOW_DELAY),</span>
+
+    /**
+     * Place global headers in extradata instead of every keyframe.
+     */
+<span class="fc" id="L93">    GLOBAL_HEADER(Constants.GLOBAL_HEADER),</span>
+
+    /**
+     * Use only bitexact functions (except (I)DCT).
+     */
+<span class="fc" id="L98">    BITEXACT(Constants.BITEXACT),</span>
+
+    /**
+     * H.263 advanced intra coding / MPEG-4 AC prediction.
+     */
+<span class="fc" id="L103">    AIC(Constants.AIC),</span>
+
+    /**
+     * Interlaced motion estimation.
+     */
+<span class="fc" id="L108">    ILME(Constants.ILME),</span>
+
+    /**
+     * Closed GOP.
+     */
+<span class="fc" id="L113">    CGOP(Constants.CGOP),</span>
+
+    /**
+     * Output even potentially corrupted frames.
+     */
+<span class="fc" id="L118">    OUTPUT_CORRUPT(Constants.OUTPUT_CORRUPT);</span>
+
+
+    private final String name;
+
+
+<span class="fc" id="L124">    AVCodecFlagType(final String name) {</span>
+<span class="fc" id="L125">        this.name = name;</span>
+<span class="fc" id="L126">    }</span>
+
+
+    @Override
+    public String getName() {
+<span class="fc" id="L131">        return name;</span>
+    }
+
+
+    public static AVCodecFlagType findByName(final String name) {
+<span class="fc" id="L136">        return AVUtils.findByName(AVCodecFlagType.class, name);</span>
+    }
+
+
+    /**
+     * @author Vladislav Bauer
+     */
+
+    public static final class Constants {
+
+        public static final String UNALIGNED = &quot;unaligned&quot;;
+        public static final String MV4 = &quot;mv4&quot;;
+        public static final String QPEL = &quot;qpel&quot;;
+        public static final String LOOP = &quot;loop&quot;;
+        public static final String QSCALE = &quot;qscale&quot;;
+        public static final String GMC = &quot;gmc&quot;;
+        public static final String MV0 = &quot;mv0&quot;;
+        public static final String INPUT_PRESERVED = &quot;input_preserved&quot;;
+        public static final String PASS1 = &quot;pass1&quot;;
+        public static final String PASS2 = &quot;pass2&quot;;
+        public static final String GRAY = &quot;gray&quot;;
+        public static final String EMU_EDGE = &quot;emu_edge&quot;;
+        public static final String PSNR = &quot;psnr&quot;;
+        public static final String TRUNCATED = &quot;truncated&quot;;
+        public static final String NAQ = &quot;naq&quot;;
+        public static final String ILDCT = &quot;ildct&quot;;
+        public static final String LOW_DELAY = &quot;low_delay&quot;;
+        public static final String GLOBAL_HEADER = &quot;global_header&quot;;
+        public static final String BITEXACT = &quot;bitexact&quot;;
+        public static final String AIC = &quot;aic&quot;;
+        public static final String ILME = &quot;ilme&quot;;
+        public static final String CGOP = &quot;cgop&quot;;
+        public static final String OUTPUT_CORRUPT = &quot;output_corrupt&quot;;
+
+
+<span class="fc" id="L171">        private Constants() {</span>
+<span class="fc" id="L172">            throw new UnsupportedOperationException();</span>
+        }
+
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>
